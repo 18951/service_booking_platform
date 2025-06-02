@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareMate - Professional Services at Your Doorstep</title>
+  <link rel="icon" type="image/png" href="img/logo.jpg" sizes="16x16">
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+</head>
+<body>
+  <!--Toaster-->
+  <div class="toast-container"></div>
+ <!-- Loader -->
+ <div class="loader" id="loader">
+  <div class="spinner"></div>
+  <p>Loading CareMate...</p>
+</div>
+<!-- Header -->
+<header>
+  <nav>
+    <div class="logo">
+      <img src="img/logo.jpg" alt="CareMate Logo" style="height: 40px; border-radius: 8px;"> CareMate
+    </div>
+
+
+ <div class="nav-right">
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Search for services...">
+          <div class="search-box"></div>
+        </div>
+
+  
+  <div class="pincode-container">
+          <i class="fas fa-map-marker-alt location-icon"></i>
+          <input type="text" id="pincodeInput" placeholder="Enter pincode" maxlength="6" pattern="[0-9]{6}">
+          <div class="pincode-suggestions"></div>
+        </div>
+
+        <button class="cart-icon" id="cartButton">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+
+     <div class="profile-container">
+          <button class="profile-icon" id="profileButton">
+            <i class="fas fa-user"></i>
+          </button>
+      <div class="profile-menu" id="profileMenu"></div>
+  </div>
+</div>
+</nav>
+<div id="cartModal" class="cart-modal">
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <button class="close-cart" id="closeCart" data-testid="close-cart">×</button>
+  </div>
+  <div id="cartItems"></div>
+  <button class="cart-checkout" id="cartCheckout" onclick="openBookingDetails()" data-testid="cart-checkout">Continue</button>
+</div>
+<!-- Auth Modal Structure -->
+<div id="authModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="authTitle">Signin</h2>
+      <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+    </div>
+    <form id="authForm">
+      <div class="form-group" id="nameLabel">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile Number</label>
+        <input type="tel" id="mobile" placeholder="Enter 10 digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
+      </div>
+      <div class="form-group" id="emailLabel" style="display: none;">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+      </div>
+      <button type="button" id="getOtpBtn" class="btn-primary">Get OTP</button>
+      <div id="otpTimerContainer" style="display: none; text-align: center; margin-top: 15px;">
+        <p>Enter OTP in <span id="otpTimer">30</span> seconds</p>
+      </div>
+      <button type="button" id="resendOtpBtn" style="display: none;" class="btn-secondary">Resend OTP</button>
+      <div id="otpContainer" class="otp-container">
+        <p>Enter OTP sent to your mobile</p>
+        <div class="otp-inputs">
+          <input type="text" class="otp-input" id="otp1" maxlength="1">
+          <input type="text" class="otp-input" id="otp2" maxlength="1">
+          <input type="text" class="otp-input" id="otp3" maxlength="1">
+          <input type="text" class="otp-input" id="otp4" maxlength="1">
+        </div>
+        <button type="button" id="verifyOtpBtn" class="btn-primary">Verify & Login</button>
+      </div>
+    </form>
+    <p class="toggle-link">
+      <a href="#" id="toggleLink">Switch to Register</a>
+    </p>
+  </div>
+</div>
+</header>
+
+     <!-- Main Content -->
+    <!--Home-->
+    <main>
+    <div class="home-container">
+            <div class="welcome-section" data-aos="fade-up">
+                <h1>Professional Services at Your Doorstep</h1>
+                <p>Book trusted professionals for all your home and personal care needs with just a few clicks.</p>
+                <a href="#allServices" class="cta-button">Explore Services</a>
+            </div>
+
+            <div class="video-section" data-aos="fade-up" data-aos-delay="200">
+              <div class="video-container">
+                  <video controls autoplay muted loop>
+                      <source src="img/Image_Slide.mp4" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+              </div>
+          </div>
+      </main>
+
+
+        
+        <!-- All Services -->
+  <section id="allServices" class="section">
+    <h2 class="section-title">All Services</h2>
+    <div class="carousel">
+      <div class="carousel-container" id="allServicesCarousel"></div>
+      <button class="carousel-control carousel-prev" onclick="scrollCarousel('allServicesCarousel', -300)">&#10094;</button>
+      <button class="carousel-control carousel-next" onclick="scrollCarousel('allServicesCarousel', 300)">&#10095;</button>
+    </div>
+    <button class="view-more" onclick="openViewMoreModal('all')">View More</button>
+  </section>
+
+
+
+    <!--- #GIRLS CORNER --->
+
+    <h2 class="h2 section-title">Men's <span class="span">Corner</span></h2>
+    <div class="live-match-player">
+
+       <figure class="player player-1 img-holder" style="--width: 406; --height: 277;">
+         <img src="img/mens hair cut.png" width="406" height="277" loading="lazy"
+           alt="Skin Care" class="w-100">
+       </figure>
+
+       <div class="live-match-detail">
+
+         <!--<p class="live-match-subtitle" style="font-size: 30px;">Trendy Services For Girls</p>-->
+
+         <p style="font-size: 30px; text-align: center;"><b>FACIAL & CLEANUP</p>
+         <p style="font-size: 30px; text-align: center;">MANICURE</p>
+         <p style="font-size: 30px; text-align: center;">HAIR CARE</p>
+         <p style="font-size: 30px; text-align: center;">STRESS RELIEF</p>
+         <p style="font-size: 30px; text-align: center;" >NATURAL SKINCARE</b></p>
+     
+
+       </div>
+
+       <figure class="player player-2 img-holder" style="--width: 400; --height: 305;">
+         <img src="img/Mens Massage.png" width="400" height="305" loading="lazy"
+           alt="Hair Care" class="w-100">
+       </figure>
+
+     </div>
+
+
+     <!-- Men's Salon -->
+  <section id="mensSalon" class="section">
+    <h2 class="section-title">Men’s Salon</h2>
+    <div class="carousel">
+      <div class="carousel-container" id="mensSalonCarousel"></div>
+      <button class="carousel-control carousel-prev" onclick="scrollCarousel('mensSalonCarousel', -300)">&#10094;</button>
+      <button class="carousel-control carousel-next" onclick="scrollCarousel('mensSalonCarousel', 300)">&#10095;</button>
+    </div>
+    <button class="view-more" onclick="openViewMoreModal('mensSalon')">View More</button>
+  </section>
+
+
+    <!--- #GIRLS CORNER --->
+
+        <h2 class="h2 section-title">Girl's <span class="span">Corner</span></h2>
+           <div class="live-match-player">
+
+              <figure class="player player-1 img-holder" style="--width: 406; --height: 277;">
+                <img src="img/live-match-player-1.jpeg" width="406" height="277" loading="lazy"
+                  alt="Skin Care" class="w-100">
+              </figure>
+
+              <div class="live-match-detail">
+
+                <!--<p class="live-match-subtitle" style="font-size: 30px;">Trendy Services For Girls</p>-->
+
+                <p style="font-size: 30px; text-align: center;"><b>FACIAL & CLEANUP</p>
+                <p style="font-size: 30px; text-align: center;">MANICURE</p>
+                <p style="font-size: 30px; text-align: center;">HAIR CARE</p>
+                <p style="font-size: 30px; text-align: center;">STRESS RELIEF</p>
+                <p style="font-size: 30px; text-align: center;" >NATURAL SKINCARE</b></p>
+            
+
+              </div>
+
+              <figure class="player player-2 img-holder" style="--width: 400; --height: 305;">
+                <img src="img/live-match-player-2.jpeg" width="400" height="305" loading="lazy"
+                  alt="Hair Care" class="w-100">
+              </figure>
+
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+    <!-- Girls' Salon -->
+  <section id="girlsSalon" class="section">
+    <h2 class="section-title">Girls’ Salon</h2>
+    <div class="carousel">
+      <div class="carousel-container" id="girlsSalonCarousel"></div>
+      <button class="carousel-control carousel-prev" onclick="scrollCarousel('girlsSalonCarousel', -300)">&#10094;</button>
+      <button class="carousel-control carousel-next" onclick="scrollCarousel('girlsSalonCarousel', 300)">&#10095;</button>
+    </div>
+    <button class="view-more" onclick="openViewMoreModal('girlsSalon')">View More</button>
+  </section>
+
+  <!-- Most Booked Services -->
+  <section id="mostBooked" class="section">
+    <h2 class="section-title">Most Booked Services</h2>
+    <div class="carousel">
+      <div class="carousel-container" id="mostBookedCarousel"></div>
+      <button class="carousel-control carousel-prev" onclick="scrollCarousel('mostBookedCarousel', -300)">&#10094;</button>
+      <button class="carousel-control carousel-next" onclick="scrollCarousel('mostBookedCarousel', 300)">&#10095;</button>
+    </div>
+    <button class="view-more" onclick="openViewMoreModal('mostBooked')">View More</button>
+  </section>
+
+   <!-- Home Decoration -->
+  <section id="homeDecoration" class="section">
+    <h2 class="section-title">Home Decoration</h2>
+    <div class="carousel">
+      <div class="carousel-container" id="homeDecorationCarousel"></div>
+      <button class="carousel-control carousel-prev" onclick="scrollCarousel('homeDecorationCarousel', -300)">&#10094;</button>
+      <button class="carousel-control carousel-next" onclick="scrollCarousel('homeDecorationCarousel', 300)">&#10095;</button>
+    </div>
+    <button class="view-more" onclick="openViewMoreModal('homeDecoration')">View More</button>
+  </section>
+
+ <!-- View More Modal Structure (for reference, created dynamically in JS) -->
+ <div id="viewMoreModal" class="modal" style="display: none;">
+  <div class="modal-content view-more-modal">
+      <div class="modal-header">
+          <h2>Category Name</h2>
+          <span class="close-modal">×</span>
+      </div>
+      <div class="view-more-content"></div>
+  </div>
+</div> 
+
+ <!-- How It Works Section -->
+ <section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>How It Works</h2>
+    </div>
+    <div class="steps">
+      <div class="step" data-aos="fade-up" data-aos-delay="100">
+        <div class="step-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3>Search</h3>
+        <p>Find the service you need from our extensive catalog</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="200">
+        <div class="step-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3>Book</h3>
+        <p>Select a convenient date and time for your service</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="300">
+        <div class="step-icon">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <h3>Confirm</h3>
+        <p>Review your booking details and confirm your appointment</p>
+      </div>
+      <div class="step" data-aos="fade-up" data-aos-delay="400">
+        <div class="step-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Enjoy</h3>
+        <p>Sit back and enjoy professional service at your doorstep</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+   <!-- Testimonials -->
+   <section class="testimonials">
+    <div class="container">
+      
+        <h2 class="section-title" style="text-align: center;">What Our Customers Say</h2>
+        <div class="carousel">
+          <button class="carousel-control carousel-prev" onclick="scrollCarousel('testimonialCarousel', -300)">
+              <i class="fas fa-chevron-left"></i>
+          </button>
+        
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Excellent service! The electrician was very professional and fixed all issues quickly."</p>
+                <p class="testimonial-author">Rahul Singh</p>
+            </div>
+            
+            <div class="testimonial">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"I love the salon services. The staff is skilled and uses quality products."</p>
+                <p class="testimonial-author">Priya Sharma</p>
+            </div>
+          
+          <div class="testimonial">
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+              </div>
+              <p class="testimonial-text">"Best home cleaning service I've used. They pay attention to every detail!"</p>
+              <p class="testimonial-author">Rajesh Patel</p>
+          </div>
+        </div>
+        <button class="carousel-control carousel-next" onclick="scrollCarousel('testimonialCarousel', 300)">
+          <i class="fas fa-chevron-right"></i>
+      </button>
+  </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+  <div class="container">
+    <h2>Ready to Experience Professional Services?</h2>
+    <p>Join thousands of satisfied customers who rely on CareMate for all their service needs. Book your first service today and enjoy the convenience!</p>
+    <a href="#" class="btn">Get Started</a>
+  </div>
+</section>
+
+
+  <!-- 
+    - #FOOTER
+  -->
+  <footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h3 class="footer-brand">CareMate</h3>
+                <p class="footer-desc">Your one-stop solution for all home services and products.</p>
+            </div>
+            
+            <div>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#service">Services</a></li>
+                    <li><a href="#testimonials">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="footer-heading">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#faq">FAQs</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#refund">Refund Policy</a></li>
+                </ul>
+            </div>
+    
+            <div>
+                <div class="social-wrapper">
+                    <h4 class="footer-heading">Follow Us</h4>
+                    <ul class="social-list">
+                        <li><a href="https://www.facebook.com/" class="social-link"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://twitter.com/" class="social-link"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/" class="social-link"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="https://www.linkedin.com/" class="social-link"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+                
+                <h4 class="footer-heading">Newsletter</h4>
+                <form onsubmit="subscribeNewsletter(event)">
+                    <div class="footer-newsletter">
+                        <input type="email" class="newsletter-input" placeholder="Your email" required>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> CareMate. All rights reserved.</p>
+        </div>
+    </div>
+    <a href="#" id="back-to-top" class="back-to-top" aria-label="Back to top">
+      <i class="fas fa-arrow-up"></i>
+  </a>
+    </footer>
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="script.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <!-- Razorpay SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93987effacbdad5f',t:'MTc0NjE5OTE1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+
+
+</body>
+</html>
